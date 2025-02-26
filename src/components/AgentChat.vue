@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons-vue';
 import { useWebSocket } from '../composables/useWebSocket';
 import { useChat } from '../composables/useChat';
+import { useTaskProgress } from '../composables/useTaskProgress';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { saveAs } from 'file-saver';
@@ -52,6 +53,8 @@ const {
   resetWaitingForInput
 } = useChat();
 
+const { handleWebSocketMessage, resetProgress } = useTaskProgress();
+
 const messageAreaRef = ref<HTMLDivElement | null>(null);
 const isPanelVisible = ref(false);
 const drawerVisible = ref(false);
@@ -86,12 +89,14 @@ onMounted(() => {
         if (data.content) {
           const processedContent = processMarkdown(data.content);
           updateLastMessage(processedContent);
+          handleWebSocketMessage(data);
           scrollToBottom();
         }
         break;
       case 'request_input':
         if (data.question) {
           setWaitingForInput(data.question, data.options);
+          handleWebSocketMessage(data);
           scrollToBottom();
         }
         break;
@@ -99,6 +104,7 @@ onMounted(() => {
         if (data.content) {
           const processedContent = processMarkdown(data.content);
           updateLastMessage(processedContent);
+          handleWebSocketMessage(data);
           analysisInProgress.value = false;
           scrollToBottom();
         }
@@ -133,6 +139,7 @@ const handleStartAnalysis = (params: any) => {
   });
   analysisInProgress.value = true;
   isPanelVisible.value = false;
+  resetProgress(); // Reset progress when starting new analysis
 };
 
 const selectOption = (option: string) => {

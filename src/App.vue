@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import AgentChat from './components/AgentChat.vue'
+import TaskProgressSidebar from './components/TaskProgressSidebar.vue'
 </script>
 
 <template>
   <a-config-provider theme="dark">
-    <AgentChat />
+    <div class="app-layout">
+      <AgentChat />
+      <TaskProgressSidebar />
+    </div>
   </a-config-provider>
 </template>
 
@@ -78,6 +82,12 @@ html, body {
   width: 100vw;
   height: 100vh;
   background-color: var(--app-background);
+}
+
+.app-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 /* 滚动条样式 */
