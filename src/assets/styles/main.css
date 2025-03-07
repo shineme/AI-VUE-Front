@@ -1,0 +1,184 @@
+/* 主题变量 */
+:root {
+  /* 亮色主题 */
+  --sidebar-bg: #f9fafb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --item-background: #ffffff;
+  --icon-background: #f3f4f6;
+  --completed-color: #34d399;
+  --active-color: #60a5fa;
+  --agent-marquee-color-1: rgba(96, 165, 250, 0.1);
+  --agent-marquee-color-2: rgba(96, 165, 250, 0.4);
+  
+  /* 流程图颜色 */
+  --flow-start: #60a5fa;
+  --flow-agent: #8b5cf6;
+  --flow-end: #34d399;
+  --flow-arrow: #6b7280;
+  --flow-background: rgba(96, 165, 250, 0.1);
+  
+  /* 活跃智能体相关颜色 */
+  --active-agent-background: rgba(99, 102, 241, 0.1);
+  --active-agent-border: rgba(99, 102, 241, 0.6);
+  --agent-activity-gradient-1: #6366f1;
+  --agent-activity-gradient-2: #8b5cf6;
+}
+
+/* 暗色主题 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sidebar-bg: #1e293b; 
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --border-color: #2d3748;
+    --item-background: #2d3748;
+    --icon-background: #374151;
+    --completed-color: #34d399;
+    --active-color: #60a5fa;
+    --agent-marquee-color-1: rgba(96, 165, 250, 0.1);
+    --agent-marquee-color-2: rgba(96, 165, 250, 0.4);
+    
+    /* 流程图颜色 */
+    --flow-start: #60a5fa;
+    --flow-agent: #8b5cf6;
+    --flow-end: #34d399;
+    --flow-arrow: #94a3b8;
+    --flow-background: rgba(96, 165, 250, 0.15);
+  }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-primary);
+}
+
+/* 动画样式 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+
+/* 通知动画 */
+@keyframes notification-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(96, 165, 250, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0);
+  }
+}
+
+.notification-pulse {
+  animation: notification-pulse 2s infinite;
+}
+
+/* 智能体转换动画 */
+@keyframes agent-transition {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.agent-transition-enter-active {
+  animation: agent-transition 0.5s ease-out;
+}
+
+.agent-transition-leave-active {
+  animation: agent-transition 0.5s ease-in reverse;
+}
+
+/* 流程图动画效果 */
+@keyframes flow-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+  }
+}
+
+.agent-node {
+  animation: flow-pulse 2s infinite;
+}
+
+/* Mermaid风格流程图 */
+.flow-diagram {
+  position: relative;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--flow-background);
+  transition: all 0.3s ease;
+}
+
+.flow-diagram:hover {
+  box-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+}
+
+.flow-node {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flow-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.flow-arrow {
+  position: relative;
+  transition: width 0.3s ease;
+}
+
+.flow-arrow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -4px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid var(--flow-arrow);
+}
